@@ -1,121 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useTheme } from "@/components/ui/theme-provider"
+import { Moon, Sun } from "lucide-react"
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { theme, setTheme } = useTheme()
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground transition-colors duration-300">
+      <div className="max-w-md w-full p-8 space-y-8 text-center bg-card rounded-xl shadow-lg border border-border">
+        <h1 className="text-4xl font-bold tracking-tight text-primary">
+          Prueba Técnica SIATA
+        </h1>
+        <p className="text-muted-foreground">
+          El tema actual es: <span className="font-mono font-bold uppercase">{theme}</span>
+        </p>
+
+        <div className="flex justify-center gap-4">
+          <button
+            onClick={() => setTheme("light")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-all ${theme === "light"
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-background hover:bg-accent border-input"
+              }`}
+          >
+            <Sun size={18} />
+            Claro
+          </button>
+
+          <button
+            onClick={() => setTheme("dark")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-all ${theme === "dark"
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-background hover:bg-accent border-input"
+              }`}
+          >
+            <Moon size={18} />
+            Oscuro
+          </button>
+
+          <button
+            onClick={() => setTheme("system")}
+            className={`px-4 py-2 rounded-md border transition-all ${theme === "system"
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-background hover:bg-accent border-input"
+              }`}
+          >
+            Sistema
+          </button>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
+
+        <div className="pt-4 border-t border-border">
+          <p className="text-sm text-muted-foreground">
+            Este es un ejemplo de integración con shadcn y Tailwind CSS v4.
+            El color principal (primary) está configurado como #1b73cd.
           </p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      </div>
+    </div>
   )
 }
 
