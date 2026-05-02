@@ -59,22 +59,29 @@ El componente `DataTable` es genérico y maneja la lógica de visualización, b�
 - **Búsqueda**: Se realiza de forma reactiva en el cliente sobre el total de datos cargados (los 200 registros), permitiendo encontrar elementos que no están en la página actual sin latencia de red.
 
 ## 5. Sincronización de Datos (Invalidación)
-Para asegurar que la tabla se actualice tras crear, editar o eliminar, se debe invalidar la caché en el `onSuccess` de las mutaciones dentro de los formularios.
+Para asegurar que la tabla se actualice tras crear, editar o eliminar, se debe invalidar la caché en el `onSuccess` de las mutaciones.
 
 ```typescript
-// En el Formulario (Modal)
-const mutation = useMutation({
-  mutationFn: (data) => service.create(data),
-  onSuccess: () => {
-    // Invalida todas las queries que empiecen por "entities"
-    queryClient.invalidateQueries({ queryKey: ["entities"] });
-    toast.success("Operación exitosa");
-    onClose();
-  },
-});
+// En el Formulario o ConfirmModal
+onSuccess: () => {
+  queryClient.invalidateQueries({ queryKey: ["entities"] });
+  toast.success("Operación exitosa");
+  onClose();
+},
 ```
 
-## 6. Mejores Prácticas
+## 6. Eliminación Segura (ConfirmModal)
+Nunca se debe eliminar un registro directamente desde el botón de la tabla. El flujo estándar es:
+1.  **Abrir Modal**: Llamar a `onOpen("DELETE_ENTITY", item)`.
+2.  **Confirmación**: El usuario debe ver un modal con estilo de advertencia (`maxWidth: "sm"`) que explique las consecuencias.
+3.  **Ejecución**: Al confirmar, se ejecuta la mutación y se invalida la caché.
+
+```tsx
+// Ejemplo en ListPage.tsx
+onDelete={(item) => onOpen("DELETE_ENTITY", item)}
+```
+
+## 7. Mejores Prácticas
 1. **Zod Schemas**: Definir siempre el esquema de validación en `.types.ts` y usarlo con `zodResolver` en los formularios.
 2. **Iconografía**: Usar el componente `<Icon />` (Material Symbols) para mantener la estética consistente.
 3. **Skeleton/Loading**: La `DataTable` ya maneja un estado de carga interno; no es necesario ocultar toda la página con un spinner global.

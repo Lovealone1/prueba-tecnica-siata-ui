@@ -66,7 +66,7 @@ export function CustomerListPage() {
         onAdd={() => onOpen("CREATE_CUSTOMER")}
         addLabel="Nuevo Cliente"
         onEdit={(item) => onOpen("EDIT_CUSTOMER", item)}
-        onDelete={(item) => toast.error(`Eliminar: ${item.name}`, { description: "Esta acción abriría el modal de confirmación." })}
+        onDelete={(item) => onOpen("DELETE_CUSTOMER", item)}
         onView={(item) => onOpen("VIEW_CUSTOMER", item)}
       />
     </div>

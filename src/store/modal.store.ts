@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export type ModalType = 
-  | "CREATE_CUSTOMER" | "EDIT_CUSTOMER" | "VIEW_CUSTOMER"
+  | "CREATE_CUSTOMER" | "EDIT_CUSTOMER" | "VIEW_CUSTOMER" | "DELETE_CUSTOMER"
   | "CREATE_PRODUCT" | "EDIT_PRODUCT" | "VIEW_PRODUCT"
   | "CREATE_LOGISTICS" | "EDIT_LOGISTICS"
   | null;
