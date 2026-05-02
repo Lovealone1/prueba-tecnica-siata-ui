@@ -10,14 +10,18 @@ import { LogisticsPage } from "@/features/logistics/pages/LogisticsPage";
 import { ShipmentListPage } from "@/features/shipment/pages/ShipmentListPage";
 import { AuthGuard } from "@/features/auth/components/AuthGuard";
 import { PublicGuard } from "@/features/auth/components/PublicGuard";
+import { NotFoundPage } from "@/features/layout/pages/NotFoundPage";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <AuthGuard>
-        <DashboardLayout />
-      </AuthGuard>
+      <ErrorBoundary>
+        <AuthGuard>
+          <DashboardLayout />
+        </AuthGuard>
+      </ErrorBoundary>
     ),
     children: [
       {
@@ -45,9 +49,11 @@ export const router = createBrowserRouter([
   {
     path: "/auth",
     element: (
-      <PublicGuard>
-        <AuthLayout />
-      </PublicGuard>
+      <ErrorBoundary>
+        <PublicGuard>
+          <AuthLayout />
+        </PublicGuard>
+      </ErrorBoundary>
     ),
     children: [
       {
@@ -66,6 +72,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <Navigate to="/" replace />,
+    element: <NotFoundPage />,
   },
 ]);

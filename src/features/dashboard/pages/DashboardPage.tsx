@@ -1,10 +1,13 @@
 import { useAuthStore, useAuthUser } from "@/store/auth.store";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { useModalStore } from "@/store/modal.store";
 
 export function DashboardPage() {
   const user = useAuthUser();
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
+  const onOpen = useModalStore((state) => state.onOpen);
 
   const handleLogout = () => {
     logout();
@@ -28,6 +31,64 @@ export function DashboardPage() {
           <span className="material-symbols-outlined text-xl group-hover:rotate-180 transition-transform duration-500">logout</span>
           <span>Cerrar Sesión</span>
         </button>
+      </div>
+
+      {/* Toast Test Section */}
+      <div className="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30 space-y-4">
+        <h2 className="text-sm font-black uppercase tracking-widest text-primary">Test Notifier System</h2>
+        <div className="flex flex-wrap gap-3">
+          <button
+            onClick={() => toast.success("Operación exitosa", { description: "Los datos se han guardado correctamente en la base de datos." })}
+            className="px-4 py-2 bg-primary/10 text-primary font-bold rounded-xl hover:bg-primary hover:text-white transition-all"
+          >
+            Success Toast
+          </button>
+          <button
+            onClick={() => toast.error("Error crítico", { description: "Ha ocurrido un problema al intentar procesar la solicitud." })}
+            className="px-4 py-2 bg-error/10 text-error font-bold rounded-xl hover:bg-error hover:text-white transition-all"
+          >
+            Error Toast
+          </button>
+          <button
+            onClick={() => toast("Aviso del sistema", { description: "Hay una nueva actualización disponible para el módulo de logística." })}
+            className="px-4 py-2 bg-surface-container-high text-on-surface font-bold rounded-xl hover:bg-on-surface hover:text-white transition-all"
+          >
+            Default Toast
+          </button>
+          <button
+            onClick={() => toast.info("Acción requerida", { 
+              description: "¿Deseas confirmar la eliminación del registro?",
+              action: {
+                label: "Confirmar",
+                onClick: () => toast.success("Confirmado")
+              }
+            })}
+            className="px-4 py-2 bg-secondary/10 text-secondary font-bold rounded-xl hover:bg-secondary hover:text-white transition-all"
+          >
+            Action Toast
+          </button>
+        </div>
+
+        <div className="pt-4 border-t border-outline-variant/10 flex flex-wrap gap-3">
+          <button
+            onClick={() => onOpen("CREATE_CUSTOMER")}
+            className="px-4 py-2 bg-primary text-white font-bold rounded-xl hover:bg-primary-container transition-all"
+          >
+            Test Create Customer
+          </button>
+          <button
+            onClick={() => onOpen("CREATE_PRODUCT")}
+            className="px-4 py-2 bg-primary text-white font-bold rounded-xl hover:bg-primary-container transition-all"
+          >
+            Test Create Product
+          </button>
+          <button
+            onClick={() => onOpen("CREATE_LOGISTICS")}
+            className="px-4 py-2 bg-primary text-white font-bold rounded-xl hover:bg-primary-container transition-all"
+          >
+            Test Create Logistics
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
