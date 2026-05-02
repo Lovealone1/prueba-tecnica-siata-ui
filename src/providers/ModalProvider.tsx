@@ -9,6 +9,9 @@ import { ConfirmDeleteProductModal } from "@/features/modals/ConfirmDeleteProduc
 import { LogisticsForm } from "@/features/modals/LogisticsForm";
 import { LogisticsDetails } from "@/features/modals/LogisticsDetails";
 import { ConfirmDeleteLogisticsModal } from "@/features/modals/ConfirmDeleteLogisticsModal";
+import { ShipmentForm } from "@/features/modals/ShipmentForm";
+import { ShipmentDetails } from "@/features/modals/ShipmentDetails";
+import { ConfirmDeleteShipmentModal } from "@/features/modals/ConfirmDeleteShipmentModal";
 
 export function ModalProvider() {
   const { isOpen, type, data, onClose } = useModalStore();
@@ -86,11 +89,39 @@ export function ModalProvider() {
           component: <LogisticsDetails data={data} />,
           maxWidth: "md",
         };
-      case "DELETE_LOGISTICS":
+        case "DELETE_LOGISTICS":
         return {
           title: "Eliminar Ubicación",
           subtitle: "Esta acción no se puede deshacer.",
           component: <ConfirmDeleteLogisticsModal data={data} />,
+          maxWidth: "sm",
+        };
+      case "CREATE_SHIPMENT":
+        return {
+          title: "Nuevo Envío",
+          subtitle: "Registra un nuevo envío y genera su guía logística.",
+          component: <ShipmentForm />,
+          maxWidth: "lg",
+        };
+      case "EDIT_SHIPMENT":
+        return {
+          title: "Editar Envío",
+          subtitle: "Modifica los datos del envío seleccionado (solo si está PENDIENTE).",
+          component: <ShipmentForm initialData={data} />,
+          maxWidth: "lg",
+        };
+      case "VIEW_SHIPMENT":
+        return {
+          title: "Detalles del Envío",
+          subtitle: "Información completa y descarga de guía.",
+          component: <ShipmentDetails data={data} />,
+          maxWidth: "md",
+        };
+      case "DELETE_SHIPMENT":
+        return {
+          title: "Eliminar Envío",
+          subtitle: "Esta acción no se puede deshacer.",
+          component: <ConfirmDeleteShipmentModal data={data} />,
           maxWidth: "sm",
         };
       default:
@@ -108,6 +139,7 @@ export function ModalProvider() {
       onClose={onClose}
       title={config.title}
       subtitle={config.subtitle}
+      maxWidth={config.maxWidth as any}
     >
       {config.component}
     </Modal>

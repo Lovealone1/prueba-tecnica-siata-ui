@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 interface Option {
   value: string;
   label: string;
+  subLabel?: string;
   icon?: string;
 }
 
@@ -45,7 +46,8 @@ export function SearchableSelect({
     const lowerSearch = search.toLowerCase();
     return options.filter((opt) => 
       opt.label.toLowerCase().includes(lowerSearch) || 
-      opt.value.toLowerCase().includes(lowerSearch)
+      opt.value.toLowerCase().includes(lowerSearch) ||
+      opt.subLabel?.toLowerCase().includes(lowerSearch)
     );
   }, [options, search]);
 
@@ -68,6 +70,25 @@ export function SearchableSelect({
     }
   }, [isOpen]);
 
+  const searchBar = (
+    <div className={cn(
+      "px-3 py-2 border-outline-variant/10",
+      direction === "up" ? "border-t" : "border-b"
+    )}>
+      <div className="relative">
+        <Icon name="search" size="xs" className="absolute left-3 top-1/2 -translate-y-1/2 text-outline" />
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder={searchPlaceholder}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full pl-9 pr-4 py-2 bg-surface-container-low border border-outline-variant/20 rounded-lg text-xs focus:border-primary outline-none transition-all"
+        />
+      </div>
+    </div>
+  );
+
   return (
     <div className={cn("space-y-1.5 w-full relative", className)} ref={containerRef}>
       {label && (
@@ -81,8 +102,8 @@ export function SearchableSelect({
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
-            "w-full flex items-center justify-between pl-12 pr-4 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm transition-all outline-none",
-            size === "sm" ? "py-2 pl-10" : "py-3",
+            "w-full flex items-center justify-between pl-12 pr-4 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm transition-all outline-none h-[46px]",
+            size === "sm" ? "py-2 pl-10 h-auto" : "py-3",
             isOpen ? "border-primary ring-4 ring-primary/5" : "hover:border-outline-variant/60"
           )}
         >
@@ -99,12 +120,19 @@ export function SearchableSelect({
                 )} 
               />
             )}
-            <span className={cn(
-              "truncate font-medium",
-              !value ? "text-outline/70" : "text-on-surface"
-            )}>
-              {selectedOption?.label || placeholder}
-            </span>
+            <div className="flex flex-col items-start overflow-hidden">
+              <span className={cn(
+                "truncate font-medium text-left w-full",
+                !value ? "text-outline/70" : "text-on-surface"
+              )}>
+                {selectedOption?.label || placeholder}
+              </span>
+              {selectedOption?.subLabel && (
+                <span className="text-[9px] text-outline font-bold truncate text-left w-full -mt-0.5">
+                  {selectedOption.subLabel}
+                </span>
+              )}
+            </div>
           </div>
           
           <Icon 
@@ -121,22 +149,10 @@ export function SearchableSelect({
           <div className={cn(
             "absolute left-0 w-full bg-background border border-outline-variant/20 rounded-2xl shadow-2xl z-[110] py-2 animate-in fade-in duration-200 overflow-hidden flex flex-col",
             direction === "up" 
-              ? "bottom-[calc(100%+4px)] slide-in-from-bottom-2" 
+              ? "bottom-[calc(100%+4px)] slide-in-from-bottom-2 flex-col-reverse" 
               : "top-[calc(100%+4px)] slide-in-from-top-2"
           )}>
-            <div className="px-3 py-2 border-b border-outline-variant/10">
-              <div className="relative">
-                <Icon name="search" size="xs" className="absolute left-3 top-1/2 -translate-y-1/2 text-outline" />
-                <input
-                  ref={inputRef}
-                  type="text"
-                  placeholder={searchPlaceholder}
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 bg-surface-container-low border border-outline-variant/20 rounded-lg text-xs focus:border-primary outline-none transition-all"
-                />
-              </div>
-            </div>
+            {direction === "down" && searchBar}
             
             <div className="max-h-60 overflow-y-auto py-1 custom-scrollbar">
               {filteredOptions.length > 0 ? (
@@ -149,16 +165,42 @@ export function SearchableSelect({
                       setIsOpen(false);
                     }}
                     className={cn(
-                      "w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-all text-left",
+                      "w-full flex items-center gap-3 px-4 py-2.5 transition-all text-left group/opt",
                       value === option.value 
-                        ? "bg-primary text-white font-bold" 
+                        ? "bg-primary text-white" 
                         : "text-on-surface hover:bg-primary/10 hover:text-primary"
                     )}
                   >
-                    {option.icon && <Icon name={option.icon} size="sm" />}
-                    <span className="truncate">{option.label}</span>
+                    <div className={cn(
+                      "flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors",
+                      value === option.value ? "bg-white/20" : "bg-primary/5 group-hover/opt:bg-primary/20"
+                    )}>
+                      <Icon 
+                        name={option.icon || "location_on"} 
+                        size="xs" 
+                        className={value === option.value ? "text-white" : "text-primary"} 
+                      />
+                    </div>
+                    
+                    <div className="flex flex-col min-w-0 flex-1">
+                      <span className={cn(
+                        "text-sm font-bold truncate",
+                        value === option.value ? "text-white" : "text-on-surface"
+                      )}>
+                        {option.label}
+                      </span>
+                      {option.subLabel && (
+                        <span className={cn(
+                          "text-[10px] truncate",
+                          value === option.value ? "text-white/80" : "text-outline font-medium"
+                        )}>
+                          {option.subLabel}
+                        </span>
+                      )}
+                    </div>
+
                     {value === option.value && (
-                      <Icon name="check" size="sm" className="ml-auto" />
+                      <Icon name="check" size="sm" className="ml-auto text-white" />
                     )}
                   </button>
                 ))
@@ -168,6 +210,8 @@ export function SearchableSelect({
                 </div>
               )}
             </div>
+
+            {direction === "up" && searchBar}
           </div>
         )}
       </div>
