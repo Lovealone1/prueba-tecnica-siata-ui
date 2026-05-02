@@ -6,6 +6,13 @@ import { z } from "zod";
 export const AuthIntentSchema = z.enum(["LOGIN", "REGISTER"]);
 export type AuthIntent = z.infer<typeof AuthIntentSchema>;
 
+export const GlobalRole = {
+  ADMIN: "ADMIN",
+  USER: "USER",
+} as const;
+
+export type GlobalRole = (typeof GlobalRole)[keyof typeof GlobalRole];
+
 export const RegistrationDataSchema = z.object({
   first_name: z.string().min(1, { message: "First name is required" }),
   last_name: z.string().min(1, { message: "Last name is required" }),
@@ -70,7 +77,7 @@ export const UserSchema = z.object({
 export type User = z.infer<typeof UserSchema>;
 
 export const AuthResponseSchema = z.object({
-  token: z.string(),
+  accessToken: z.string(),
   user: UserSchema,
 });
 export type AuthResponse = z.infer<typeof AuthResponseSchema>;

@@ -49,7 +49,7 @@ export function OtpPage() {
         registration_data: intent === "REGISTER" ? registration_data : undefined
       }),
     onSuccess: (data) => {
-      setAuth(data.token, data.user);
+      setAuth(data.accessToken, data.user);
       navigate("/dashboard");
     },
   });

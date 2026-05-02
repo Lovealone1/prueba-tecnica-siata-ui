@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Icon } from "@/utils/icon";
 import { cn } from "@/lib/utils";
+import { usePagination } from "@/hooks/usePagination";
 
 export interface Column<T> {
   header: string;
@@ -19,6 +20,12 @@ interface DataTableProps<T> {
   onAdd?: () => void;
   addLabel?: string;
   actionsLabel?: string;
+  // Pagination props
+  totalRecords?: number;
+  pageSize?: number;
+  onPageChange?: (page: number) => void;
+  currentPage?: number;
+  isLoading?: boolean;
 }
 
 export function DataTable<T extends { id: string | number }>({
@@ -32,12 +39,40 @@ export function DataTable<T extends { id: string | number }>({
   onAdd,
   addLabel = "Nuevo",
   actionsLabel = "Acciones",
+  totalRecords,
+  pageSize: propPageSize = 7,
+  onPageChange,
+  currentPage: propCurrentPage,
+  isLoading = false,
 }: DataTableProps<T>) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 8; // Fixed page size as requested
+  const [internalPage, setInternalPage] = useState(1);
+  const isServerSide = totalRecords !== undefined && onPageChange !== undefined;
+  const pageSize = propPageSize;
+  
+  // Use our new hook to handle all calculations
+  const {
+    currentPage,
+    totalPages,
+    startIndex,
+    endIndex,
+    pages,
+    hasNextPage,
+    hasPrevPage
+  } = usePagination({
+    total: isServerSide ? totalRecords : (data.filter(item => {
+      if (!searchTerm || !searchKey) return true;
+      const value = item[searchKey];
+      if (typeof value === "string" || typeof value === "number") {
+        return value.toString().toLowerCase().includes(searchTerm.toLowerCase());
+      }
+      return true;
+    }).length),
+    skip: (isServerSide ? (propCurrentPage || 1) - 1 : (internalPage - 1)) * pageSize,
+    limit: pageSize
+  });
 
-  const filteredData = data.filter((item) => {
+  const filteredData = isServerSide ? data : data.filter((item) => {
     if (!searchTerm || !searchKey) return true;
     const value = item[searchKey];
     if (typeof value === "string" || typeof value === "number") {
@@ -46,13 +81,15 @@ export function DataTable<T extends { id: string | number }>({
     return true;
   });
 
-  const totalPages = Math.ceil(filteredData.length / pageSize);
-  const startIndex = (currentPage - 1) * pageSize;
-  const paginatedData = filteredData.slice(startIndex, startIndex + pageSize);
+  const paginatedData = isServerSide ? data : filteredData.slice(startIndex - 1, startIndex - 1 + pageSize);
 
   const goToPage = (page: number) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
+      if (isServerSide) {
+        onPageChange(page);
+      } else {
+        setInternalPage(page);
+      }
     }
   };
 
@@ -71,7 +108,7 @@ export function DataTable<T extends { id: string | number }>({
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
-              setCurrentPage(1);
+              goToPage(1);
             }}
             className="w-full pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-2xl text-sm focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all shadow-sm"
           />
@@ -113,7 +150,16 @@ export function DataTable<T extends { id: string | number }>({
               </tr>
             </thead>
             <tbody className="divide-y divide-outline-variant/10">
-              {paginatedData.length > 0 ? (
+              {isLoading ? (
+                <tr>
+                  <td colSpan={columns.length + 1} className="px-6 py-20 text-center">
+                    <div className="flex flex-col items-center gap-3">
+                      <Icon name="progress_activity" className="animate-spin text-4xl text-primary" />
+                      <p className="text-sm font-bold uppercase tracking-widest text-outline">Cargando datos...</p>
+                    </div>
+                  </td>
+                </tr>
+              ) : paginatedData.length > 0 ? (
                 paginatedData.map((item) => (
                   <tr 
                     key={item.id} 
@@ -185,17 +231,17 @@ export function DataTable<T extends { id: string | number }>({
         </div>
 
         {/* Pagination Footer */}
-        {filteredData.length > 0 && (
+        {totalPages > 0 && (
           <div className="px-6 py-4 bg-surface-container-low border-t border-outline-variant/20 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-4">
               <p className="text-xs text-outline font-medium">
-                Mostrando <span className="font-bold text-on-surface">{startIndex + 1}</span> a <span className="font-bold text-on-surface">{Math.min(startIndex + pageSize, filteredData.length)}</span> de <span className="font-bold text-on-surface">{filteredData.length}</span> registros
+                Mostrando <span className="font-bold text-on-surface">{startIndex}</span> a <span className="font-bold text-on-surface">{endIndex}</span> de <span className="font-bold text-on-surface">{isServerSide ? totalRecords : filteredData.length}</span> registros
               </p>
             </div>
 
             <div className="flex items-center gap-2">
               <button
-                disabled={currentPage === 1}
+                disabled={!hasPrevPage}
                 onClick={() => goToPage(currentPage - 1)}
                 className="w-9 h-9 flex items-center justify-center rounded-xl bg-background border border-outline-variant/30 text-outline hover:text-primary hover:border-primary disabled:opacity-30 disabled:hover:text-outline disabled:hover:border-outline-variant/30 transition-all active:scale-90"
               >
@@ -203,7 +249,7 @@ export function DataTable<T extends { id: string | number }>({
               </button>
               
               <div className="flex items-center gap-1">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                {pages.map((page) => (
                   <button
                     key={page}
                     onClick={() => goToPage(page)}
@@ -220,7 +266,7 @@ export function DataTable<T extends { id: string | number }>({
               </div>
 
               <button
-                disabled={currentPage === totalPages}
+                disabled={!hasNextPage}
                 onClick={() => goToPage(currentPage + 1)}
                 className="w-9 h-9 flex items-center justify-center rounded-xl bg-background border border-outline-variant/30 text-outline hover:text-primary hover:border-primary disabled:opacity-30 disabled:hover:text-outline disabled:hover:border-outline-variant/30 transition-all active:scale-90"
               >
