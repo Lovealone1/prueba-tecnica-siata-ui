@@ -1,36 +1,36 @@
-import axios from "axios";
+import axios, { type AxiosInstance } from "axios";
 import { useAuthStore } from "@/store/auth.store";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1.0";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
-export const api = axios.create({
-  baseURL: API_URL,
+/**
+ * Main Axios instance with global configuration and interceptors.
+ */
+export const apiClient: AxiosInstance = axios.create({
+  baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Request interceptor for API calls
-api.interceptors.request.use(
+// Request interceptor: Attach JWT token if available
+apiClient.interceptors.request.use(
   (config) => {
     const token = useAuthStore.getState().token;
-    if (token) {
+    if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Response interceptor for API calls
-api.interceptors.response.use(
+// Response interceptor: Global error handling
+apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       useAuthStore.getState().logout();
-      window.location.href = "/auth/login";
     }
     return Promise.reject(error);
   }
