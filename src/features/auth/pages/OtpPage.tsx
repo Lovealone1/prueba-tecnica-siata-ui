@@ -184,9 +184,9 @@ export function OtpPage() {
               {/* Timer & Resend Action */}
               <div className="text-center space-y-6">
                 {timeLeft > 0 ? (
-                  <div className="inline-flex items-center gap-3 px-6 py-3 bg-surface-container-high rounded-full border border-outline-variant/20 shadow-sm">
+                  <div className="inline-flex items-center gap-3 px-6 py-3 bg-slate-100 rounded-full border border-slate-200 shadow-sm">
                     <span className="material-symbols-outlined text-primary animate-pulse text-xl">timer</span>
-                    <span className="text-sm font-bold text-on-surface tabular-nums">
+                    <span className="text-sm font-bold text-slate-700 tabular-nums">
                       Reenviar en <span className="text-primary">{formatTime(timeLeft)}</span>
                     </span>
                   </div>

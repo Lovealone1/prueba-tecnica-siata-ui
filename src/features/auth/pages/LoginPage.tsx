@@ -81,14 +81,14 @@ export function LoginPage() {
           <div className="w-full max-w-[440px] flex flex-col items-center">
 
             {/* Intent Switcher */}
-            <div className="bg-surface-container-high p-1 rounded-xl flex gap-1 mb-8 w-64 shadow-inner">
+            <div className="bg-slate-200 p-1 rounded-lg flex gap-1 mb-8 w-64 shadow-inner">
               <button
                 onClick={() => handleIntentChange("LOGIN")}
                 className={cn(
                   "flex-1 py-2 text-sm font-bold rounded-lg transition-all",
                   currentIntent === "LOGIN"
                     ? "bg-white text-primary shadow-md scale-[1.02]"
-                    : "text-secondary hover:text-on-surface"
+                    : "text-slate-500 hover:text-slate-900"
                 )}
               >
                 Iniciar Sesión
@@ -96,10 +96,10 @@ export function LoginPage() {
               <button
                 onClick={() => handleIntentChange("REGISTER")}
                 className={cn(
-                  "flex-1 py-2 text-sm font-bold rounded-lg transition-all",
+                  "flex-1 py-2 text-sm font-bold rounded-xl transition-all",
                   currentIntent === "REGISTER"
                     ? "bg-white text-primary shadow-md scale-[1.02]"
-                    : "text-secondary hover:text-on-surface"
+                    : "text-slate-500 hover:text-slate-900"
                 )}
               >
                 Registrarse
@@ -114,12 +114,12 @@ export function LoginPage() {
                     <img src="/logo.png" alt="SIATA Logo" className="h-16 w-auto object-contain" />
                   </div>
                 )}
-                <h1 className="text-2xl font-manrope font-extrabold text-on-surface mb-1 tracking-tight">
+                <h1 className="text-2xl font-manrope font-extrabold text-primary mb-1 tracking-tight">
                   {currentIntent === "LOGIN" ? "Bienvenido de nuevo" : "Crea tu cuenta"}
                 </h1>
                 <p className="text-on-surface-variant text-[13px] leading-relaxed max-w-[280px] mx-auto">
-                  {currentIntent === "LOGIN" 
-                    ? "Ingresa tu correo para recibir tu código" 
+                  {currentIntent === "LOGIN"
+                    ? "Ingresa tu correo para recibir tu código"
                     : "Ingresa tus datos para continuar"}
                 </p>
               </div>

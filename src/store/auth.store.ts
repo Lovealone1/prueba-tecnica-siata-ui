@@ -20,7 +20,10 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       setAuth: (token, user) => set({ token, user, isAuthenticated: true }),
       setUser: (user) => set({ user, isAuthenticated: true }),
-      logout: () => set({ token: null, user: null, isAuthenticated: false }),
+      logout: () => {
+        set({ token: null, user: null, isAuthenticated: false });
+        localStorage.removeItem("siata-auth-storage");
+      },
     }),
     {
       name: "siata-auth-storage",
@@ -35,3 +38,4 @@ export const useAuthToken = () => useAuthStore((state) => state.token);
 export const useAuthUser = () => useAuthStore((state) => state.user);
 export const useIsAuthenticated = () => useAuthStore((state) => state.isAuthenticated);
 export const useUserRole = () => useAuthStore((state) => state.user?.global_role);
+export const useLogout = () => useAuthStore((state) => state.logout);
