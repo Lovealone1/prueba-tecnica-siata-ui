@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "@/features/layout/sidebar/Sidebar";
+import { PageHeader } from "@/features/layout/PageHeader";
 import { useSidebarCollapsed } from "@/features/layout/sidebar/sidebar.store";
 import { cn } from "@/lib/utils";
 
@@ -15,7 +16,8 @@ export function DashboardLayout() {
           isCollapsed ? "ml-[72px]" : "ml-[240px]"
         )}
       >
-        <div className="max-w-7xl mx-auto">
+        <div className="w-full">
+          <PageHeader />
           <Outlet />
         </div>
       </main>
