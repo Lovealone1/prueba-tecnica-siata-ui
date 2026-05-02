@@ -27,6 +27,7 @@ interface DataTableProps<T> {
   onPageChange?: (page: number) => void;
   currentPage?: number;
   isLoading?: boolean;
+  filters?: React.ReactNode;
 }
 
 export function DataTable<T extends { id: string | number }>({
@@ -45,6 +46,7 @@ export function DataTable<T extends { id: string | number }>({
   onPageChange,
   currentPage: propCurrentPage,
   isLoading = false,
+  filters,
 }: DataTableProps<T>) {
   const [searchTerm, setSearchTerm] = useState("");
   const [internalPage, setInternalPage] = useState(1);
@@ -97,29 +99,37 @@ export function DataTable<T extends { id: string | number }>({
   return (
     <div className="space-y-4 animate-in fade-in duration-500">
       {/* Table Header / Search & Add */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-        <div className="relative w-full max-w-sm group">
-          <Icon
-            name="search"
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors"
-          />
-          <input
-            type="text"
-            placeholder={searchPlaceholder}
-            value={searchTerm}
-            onChange={(e) => {
-              const value = e.target.value;
-              setSearchTerm(value);
-              goToPage(1);
-            }}
-            className="w-full pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-2xl text-sm focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all shadow-sm"
-          />
+      <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+        <div className="flex flex-col md:flex-row items-center gap-4 w-full lg:w-auto">
+          <div className="relative w-full md:w-80 group">
+            <Icon
+              name="search"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors"
+            />
+            <input
+              type="text"
+              placeholder={searchPlaceholder}
+              value={searchTerm}
+              onChange={(e) => {
+                const value = e.target.value;
+                setSearchTerm(value);
+                goToPage(1);
+              }}
+              className="w-full pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-2xl text-sm focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all shadow-sm"
+            />
+          </div>
+
+          {filters && (
+            <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+              {filters}
+            </div>
+          )}
         </div>
 
         {onAdd && (
           <button
             onClick={onAdd}
-            className="flex items-center gap-2 px-6 py-3 bg-primary text-white font-black uppercase tracking-widest text-[11px] rounded-2xl hover:bg-primary-container active:scale-[0.98] transition-all shadow-lg shadow-primary/20 whitespace-nowrap"
+            className="flex items-center gap-2 px-6 py-3 bg-primary text-white font-black uppercase tracking-widest text-[11px] rounded-2xl hover:bg-primary-container active:scale-[0.98] transition-all shadow-lg shadow-primary/20 whitespace-nowrap ml-auto"
           >
             <Icon name="add" size="sm" />
             <span>{addLabel}</span>
