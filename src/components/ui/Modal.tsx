@@ -13,10 +13,10 @@ interface ModalProps {
 
 const MAX_WIDTHS = {
   sm: "max-w-md",
-  md: "max-w-lg",
-  lg: "max-w-2xl",
-  xl: "max-w-4xl",
-  "2xl": "max-w-6xl",
+  md: "max-w-2xl",
+  lg: "max-w-4xl",
+  xl: "max-w-5xl",
+  "2xl": "max-w-7xl",
 };
 
 export function Modal({
@@ -51,8 +51,9 @@ export function Modal({
 
       {/* Modal Content */}
       <div className={cn(
-        "relative w-full bg-background border border-outline-variant/30 rounded-[32px] shadow-2xl overflow-hidden animate-in zoom-in-95 fade-in duration-300 flex flex-col max-h-[90vh]",
-        MAX_WIDTHS[maxWidth]
+        "relative w-full bg-background border border-outline-variant/30 rounded-[32px] shadow-2xl overflow-hidden animate-in zoom-in-95 fade-in duration-300 flex flex-col max-h-[95vh]",
+        MAX_WIDTHS[maxWidth],
+        (maxWidth === "lg" || maxWidth === "xl" || maxWidth === "2xl") && "min-h-[600px]"
       )}>
         {/* Header */}
         <div className="px-8 pt-8 pb-4 flex justify-between items-start">

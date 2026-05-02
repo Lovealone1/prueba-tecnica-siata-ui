@@ -150,8 +150,14 @@
     --accent: #2d3133;
     --border: #414752;
     --outline: #9197a3;
+    --outline-variant: #414752;
+    --surface: #121415;
+    --surface-bright: #191c1e;
+    --surface-container-lowest: #0b0d0e;
     --surface-container-low: #1d2022;
+    --surface-container: #232629;
     --surface-container-high: #2d3133;
+    --surface-container-highest: #383b3e;
     --on-surface: #e0e3e5;
     --on-surface-variant: #c1c6d4;
   }

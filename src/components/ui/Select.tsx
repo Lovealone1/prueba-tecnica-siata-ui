@@ -59,8 +59,8 @@ export function Select({
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
-            "w-full flex items-center justify-between pl-12 pr-4 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm transition-all outline-none",
-            size === "sm" ? "py-2 pl-10" : "py-3",
+            "w-full flex items-center justify-between pl-12 pr-4 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm transition-all outline-none h-[46px]",
+            size === "sm" ? "py-2 pl-10 h-auto" : "py-3",
             isOpen ? "border-primary ring-4 ring-primary/5" : "hover:border-outline-variant/60"
           )}
         >
