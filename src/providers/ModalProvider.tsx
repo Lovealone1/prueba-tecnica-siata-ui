@@ -7,6 +7,8 @@ import { ProductForm } from "@/features/modals/ProductForm";
 import { ProductDetails } from "@/features/modals/ProductDetails";
 import { ConfirmDeleteProductModal } from "@/features/modals/ConfirmDeleteProductModal";
 import { LogisticsForm } from "@/features/modals/LogisticsForm";
+import { LogisticsDetails } from "@/features/modals/LogisticsDetails";
+import { ConfirmDeleteLogisticsModal } from "@/features/modals/ConfirmDeleteLogisticsModal";
 
 export function ModalProvider() {
   const { isOpen, type, data, onClose } = useModalStore();
@@ -76,6 +78,20 @@ export function ModalProvider() {
           title: "Editar Ubicación",
           subtitle: "Actualiza los datos de la infraestructura logística.",
           component: <LogisticsForm initialData={data} />,
+        };
+      case "VIEW_LOGISTICS":
+        return {
+          title: "Detalles de Ubicación",
+          subtitle: "Información completa de la infraestructura logística.",
+          component: <LogisticsDetails data={data} />,
+          maxWidth: "md",
+        };
+      case "DELETE_LOGISTICS":
+        return {
+          title: "Eliminar Ubicación",
+          subtitle: "Esta acción no se puede deshacer.",
+          component: <ConfirmDeleteLogisticsModal data={data} />,
+          maxWidth: "sm",
         };
       default:
         return null;
