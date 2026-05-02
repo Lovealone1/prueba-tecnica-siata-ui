@@ -19,8 +19,7 @@ export abstract class BaseService {
    */
   protected getPath(path: string = ""): string {
     const cleanPath = path.startsWith("/") ? path : `/${path}`;
-    const fullPath = `/${this.version}/${this.module}${cleanPath === "/" ? "" : cleanPath}`;
-    return fullPath;
+    return `/${this.version}/${this.module}${cleanPath}`;
   }
 
   protected async get<T>(path: string = "", config?: AxiosRequestConfig): Promise<T> {

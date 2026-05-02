@@ -1,6 +1,8 @@
 import { useModalStore } from "@/store/modal.store";
 import { Modal } from "@/components/ui/Modal";
 import { CustomerForm } from "@/features/modals/CustomerForm";
+import { CustomerDetails } from "@/features/modals/CustomerDetails";
+import { ConfirmDeleteModal } from "@/features/modals/ConfirmDeleteModal";
 import { ProductForm } from "@/features/modals/ProductForm";
 import { LogisticsForm } from "@/features/modals/LogisticsForm";
 
@@ -20,6 +22,20 @@ export function ModalProvider() {
           title: "Editar Cliente",
           subtitle: "Modifica los datos del cliente seleccionado.",
           component: <CustomerForm initialData={data} />,
+        };
+      case "VIEW_CUSTOMER":
+        return {
+          title: "Detalles del Cliente",
+          subtitle: "Información completa del registro seleccionado.",
+          component: <CustomerDetails data={data} />,
+          maxWidth: "md",
+        };
+      case "DELETE_CUSTOMER":
+        return {
+          title: "Confirmar Eliminación",
+          subtitle: "Esta acción no se puede deshacer.",
+          component: <ConfirmDeleteModal data={data} />,
+          maxWidth: "sm",
         };
       case "CREATE_PRODUCT":
         return {

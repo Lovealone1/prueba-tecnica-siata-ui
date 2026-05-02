@@ -16,13 +16,31 @@ export const apiClient: AxiosInstance = axios.create({
 // Request interceptor: Attach JWT token if available
 apiClient.interceptors.request.use(
   (config) => {
-    const token = useAuthStore.getState().token;
+    let token = useAuthStore.getState().accessToken;
+    
+    // Fallback: Si el token no está en el store (posible problema de hidratación),
+    // intentamos leerlo directamente del localStorage.
+    if (!token) {
+      const storedAuth = localStorage.getItem("siata-auth-storage");
+      if (storedAuth) {
+        try {
+          const parsed = JSON.parse(storedAuth);
+          token = parsed.state?.accessToken;
+        } catch (e) {
+          console.error("[Axios] Error parsing auth storage", e);
+        }
+      }
+    }
+
     if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.set("Authorization", `Bearer ${token}`);
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    console.error("[Axios Request Error]", error);
+    return Promise.reject(error);
+  }
 );
 
 // Response interceptor: Global error handling
@@ -30,6 +48,10 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
+      console.error("[Axios 401] Unauthorized", {
+        url: error.config?.url,
+        detail: error.response.data?.detail || error.response.data,
+      });
       useAuthStore.getState().logout();
     }
     return Promise.reject(error);

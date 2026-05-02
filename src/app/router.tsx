@@ -10,6 +10,8 @@ import { LogisticsPage } from "@/features/logistics/pages/LogisticsPage";
 import { ShipmentListPage } from "@/features/shipment/pages/ShipmentListPage";
 import { AuthGuard } from "@/features/auth/components/AuthGuard";
 import { PublicGuard } from "@/features/auth/components/PublicGuard";
+import { RoleGuard } from "@/features/auth/components/RoleGuard";
+import { GlobalRole } from "@/features/auth/types/auth.types";
 import { NotFoundPage } from "@/features/layout/pages/NotFoundPage";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
@@ -30,7 +32,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "customers",
-        element: <CustomerListPage />,
+        element: (
+          <RoleGuard allowedRoles={[GlobalRole.ADMIN, GlobalRole.USER]}>
+            <CustomerListPage />
+          </RoleGuard>
+        ),
       },
       {
         path: "products",
