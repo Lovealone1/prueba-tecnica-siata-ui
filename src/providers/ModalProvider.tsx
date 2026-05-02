@@ -4,6 +4,8 @@ import { CustomerForm } from "@/features/modals/CustomerForm";
 import { CustomerDetails } from "@/features/modals/CustomerDetails";
 import { ConfirmDeleteModal } from "@/features/modals/ConfirmDeleteModal";
 import { ProductForm } from "@/features/modals/ProductForm";
+import { ProductDetails } from "@/features/modals/ProductDetails";
+import { ConfirmDeleteProductModal } from "@/features/modals/ConfirmDeleteProductModal";
 import { LogisticsForm } from "@/features/modals/LogisticsForm";
 
 export function ModalProvider() {
@@ -48,6 +50,20 @@ export function ModalProvider() {
           title: "Editar Producto",
           subtitle: "Actualiza las especificaciones del producto.",
           component: <ProductForm initialData={data} />,
+        };
+      case "VIEW_PRODUCT":
+        return {
+          title: "Detalles del Producto",
+          subtitle: "Especificaciones y datos técnicos del registro.",
+          component: <ProductDetails data={data} />,
+          maxWidth: "md",
+        };
+      case "DELETE_PRODUCT":
+        return {
+          title: "Eliminar Producto",
+          subtitle: "Esta acción no se puede deshacer.",
+          component: <ConfirmDeleteProductModal data={data} />,
+          maxWidth: "sm",
         };
       case "CREATE_LOGISTICS":
         return {

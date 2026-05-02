@@ -17,6 +17,7 @@ interface SelectProps {
   icon?: string;
   className?: string;
   direction?: "up" | "down";
+  size?: "default" | "sm";
 }
 
 export function Select({
@@ -28,6 +29,7 @@ export function Select({
   icon,
   className,
   direction = "down",
+  size = "default",
 }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -57,7 +59,8 @@ export function Select({
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
-            "w-full flex items-center justify-between pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm transition-all outline-none",
+            "w-full flex items-center justify-between pl-12 pr-4 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm transition-all outline-none",
+            size === "sm" ? "py-2 pl-10" : "py-3",
             isOpen ? "border-primary ring-4 ring-primary/5" : "hover:border-outline-variant/60"
           )}
         >
@@ -65,8 +68,11 @@ export function Select({
             {icon && (
               <Icon 
                 name={selectedOption?.icon || icon} 
+                size={size === "sm" ? "xs" : "sm"}
                 className={cn(
-                  "absolute left-4 top-1/2 -translate-y-1/2 transition-colors",
+                  "absolute transition-colors",
+                  size === "sm" ? "left-3.5" : "left-4",
+                  "top-1/2 -translate-y-1/2",
                   isOpen || value ? "text-primary" : "text-outline"
                 )} 
               />
