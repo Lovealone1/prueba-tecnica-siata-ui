@@ -72,7 +72,7 @@ export function DataTable<T extends { id: string | number }>({
     limit: pageSize
   });
 
-  const filteredData = isServerSide ? data : data.filter((item) => {
+  const filteredData = data.filter((item) => {
     if (!searchTerm || !searchKey) return true;
     const value = item[searchKey];
     if (typeof value === "string" || typeof value === "number") {
@@ -81,7 +81,7 @@ export function DataTable<T extends { id: string | number }>({
     return true;
   });
 
-  const paginatedData = isServerSide ? data : filteredData.slice(startIndex - 1, startIndex - 1 + pageSize);
+  const paginatedData = isServerSide ? filteredData : filteredData.slice(startIndex - 1, startIndex - 1 + pageSize);
 
   const goToPage = (page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -107,7 +107,8 @@ export function DataTable<T extends { id: string | number }>({
             placeholder={searchPlaceholder}
             value={searchTerm}
             onChange={(e) => {
-              setSearchTerm(e.target.value);
+              const value = e.target.value;
+              setSearchTerm(value);
               goToPage(1);
             }}
             className="w-full pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-2xl text-sm focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all shadow-sm"
