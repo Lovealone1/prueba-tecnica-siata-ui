@@ -1,11 +1,13 @@
 import { useAuthStore, useAuthUser } from "@/store/auth.store";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useModalStore } from "@/store/modal.store";
 
 export function DashboardPage() {
   const user = useAuthUser();
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
+  const onOpen = useModalStore((state) => state.onOpen);
 
   const handleLogout = () => {
     logout();
@@ -64,6 +66,27 @@ export function DashboardPage() {
             className="px-4 py-2 bg-secondary/10 text-secondary font-bold rounded-xl hover:bg-secondary hover:text-white transition-all"
           >
             Action Toast
+          </button>
+        </div>
+
+        <div className="pt-4 border-t border-outline-variant/10 flex flex-wrap gap-3">
+          <button
+            onClick={() => onOpen("CREATE_CUSTOMER")}
+            className="px-4 py-2 bg-primary text-white font-bold rounded-xl hover:bg-primary-container transition-all"
+          >
+            Test Create Customer
+          </button>
+          <button
+            onClick={() => onOpen("CREATE_PRODUCT")}
+            className="px-4 py-2 bg-primary text-white font-bold rounded-xl hover:bg-primary-container transition-all"
+          >
+            Test Create Product
+          </button>
+          <button
+            onClick={() => onOpen("CREATE_LOGISTICS")}
+            className="px-4 py-2 bg-primary text-white font-bold rounded-xl hover:bg-primary-container transition-all"
+          >
+            Test Create Logistics
           </button>
         </div>
       </div>
