@@ -48,6 +48,10 @@
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
+  /* Custom Sidebar Variables */
+  --sidebar-width: 240px;
+  --sidebar-collapsed-width: 72px;
+
   @keyframes accordion-down {
     from { height: 0; }
     to { height: var(--radix-accordion-content-height); }
@@ -135,12 +139,21 @@
   }
 
   .dark {
-    --background: #191c1e;
+    --background: #0f1112;
     --foreground: #e0e3e5;
-    --card: #1d2022;
+    --card: #191c1e;
+    --popover: #191c1e;
     --primary: #a6c8ff;
     --primary-foreground: #002f5a;
+    --secondary: #b7c8e1;
+    --muted: #1d2022;
+    --accent: #2d3133;
     --border: #414752;
+    --outline: #9197a3;
+    --surface-container-low: #1d2022;
+    --surface-container-high: #2d3133;
+    --on-surface: #e0e3e5;
+    --on-surface-variant: #c1c6d4;
   }
 }
 
