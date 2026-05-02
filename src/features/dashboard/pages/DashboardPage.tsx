@@ -1,3 +1,59 @@
+import { useAuthStore, useAuthUser } from "@/store/auth.store";
+import { useNavigate } from "react-router-dom";
+
 export function DashboardPage() {
-  return <div>Dashboard Page</div>;
+  const user = useAuthUser();
+  const logout = useAuthStore((state) => state.logout);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/auth/login");
+  };
+
+  return (
+    <div className="p-8 space-y-6">
+      <div className="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-outline-variant/30">
+        <div>
+          <h1 className="text-2xl font-manrope font-bold text-on-surface">
+            Bienvenido, {user?.first_name} {user?.last_name}
+          </h1>
+          <p className="text-on-surface-variant text-sm">{user?.email}</p>
+        </div>
+        
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 px-6 py-2.5 bg-error/10 text-error font-bold rounded-xl hover:bg-error hover:text-white transition-all group"
+        >
+          <span className="material-symbols-outlined text-xl group-hover:rotate-180 transition-transform duration-500">logout</span>
+          <span>Cerrar Sesión</span>
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white p-6 rounded-2xl border border-outline-variant/30 shadow-sm">
+          <h3 className="font-bold text-primary mb-2">Rol</h3>
+          <p className="text-2xl font-black text-on-surface uppercase tracking-tighter">{user?.global_role}</p>
+        </div>
+        <div className="bg-surface p-6 rounded-2xl border border-outline-variant/30">
+          <h3 className="font-bold text-secondary mb-2">Estado</h3>
+          <p className="text-2xl font-black text-on-surface uppercase tracking-tighter">
+            {user?.is_active ? "Activo" : "Inactivo"}
+          </p>
+        </div>
+        <div className="bg-surface p-6 rounded-2xl border border-outline-variant/30">
+          <h3 className="font-bold text-secondary mb-2">ID</h3>
+          <p className="text-xs font-mono text-outline truncate">{user?.id}</p>
+        </div>
+      </div>
+      
+      <div className="bg-white p-12 rounded-2xl border border-dashed border-outline-variant/50 flex flex-col items-center justify-center text-center">
+        <span className="material-symbols-outlined text-6xl text-outline/20 mb-4">analytics</span>
+        <h2 className="text-xl font-bold text-outline">Panel de Estadísticas Mock</h2>
+        <p className="text-on-surface-variant max-w-xs mt-2">
+          Aquí se mostrarán las métricas de envíos y logística próximamente.
+        </p>
+      </div>
+    </div>
+  );
 }

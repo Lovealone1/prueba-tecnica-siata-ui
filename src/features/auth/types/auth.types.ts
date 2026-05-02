@@ -17,10 +17,27 @@ export type RegistrationData = z.infer<typeof RegistrationDataSchema>;
  * Request Payloads
  */
 export const RequestOtpSchema = z.object({
-  email: z.email({ message: "Invalid email address" }),
+  email: z.email({ message: "Ingresa un correo válido" }),
   intent: AuthIntentSchema,
+  first_name: z.string().optional(),
+  last_name: z.string().optional(),
+  phone_number: z.string().optional(),
+}).refine((data) => {
+  if (data.intent === "REGISTER") {
+    return !!data.first_name && !!data.last_name && !!data.phone_number;
+  }
+  return true;
+}, {
+  message: "Los campos de registro son obligatorios",
+  path: ["first_name"],
 });
 export type RequestOtpPayload = z.infer<typeof RequestOtpSchema>;
+
+export const RequestOtpResponseSchema = z.object({
+  message: z.string(),
+  ttl_seconds: z.number(),
+});
+export type RequestOtpResponse = z.infer<typeof RequestOtpResponseSchema>;
 
 export const VerifyOtpSchema = z.object({
   email: z.email({ message: "Invalid email address" }),
@@ -47,7 +64,7 @@ export const UserSchema = z.object({
   first_name: z.string(),
   last_name: z.string(),
   phone_number: z.string().optional(),
-  role: z.string(),
+  global_role: z.string(),
   is_active: z.boolean(),
 });
 export type User = z.infer<typeof UserSchema>;

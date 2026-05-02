@@ -1,6 +1,7 @@
 import { BaseService } from "@/services/base.service";
 import type { 
   RequestOtpPayload, 
+  RequestOtpResponse,
   VerifyOtpPayload, 
   AuthResponse, 
   Session,
@@ -15,8 +16,8 @@ export class AuthService extends BaseService {
   /**
    * Request an OTP for LOGIN or REGISTER intent.
    */
-  async requestOtp(payload: RequestOtpPayload): Promise<{ message: string }> {
-    return this.post("/otp", payload);
+  async requestOtp(payload: RequestOtpPayload): Promise<RequestOtpResponse> {
+    return this.post("/otp/request", payload);
   }
 
   /**
