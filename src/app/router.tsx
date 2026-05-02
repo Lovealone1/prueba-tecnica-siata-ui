@@ -2,16 +2,23 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { DashboardLayout } from "@/layouts/DashboardLayout";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { LoginPage } from "@/features/auth/pages/LoginPage";
+import { OtpPage } from "@/features/auth/pages/OtpPage";
 import { DashboardPage } from "@/features/dashboard/pages/DashboardPage";
 import { CustomerListPage } from "@/features/customer/pages/CustomerListPage";
 import { ProductListPage } from "@/features/product/pages/ProductListPage";
 import { LogisticsPage } from "@/features/logistics/pages/LogisticsPage";
 import { ShipmentListPage } from "@/features/shipment/pages/ShipmentListPage";
+import { AuthGuard } from "@/features/auth/components/AuthGuard";
+import { PublicGuard } from "@/features/auth/components/PublicGuard";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <DashboardLayout />,
+    element: (
+      <AuthGuard>
+        <DashboardLayout />
+      </AuthGuard>
+    ),
     children: [
       {
         index: true,
@@ -37,7 +44,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/auth",
-    element: <AuthLayout />,
+    element: (
+      <PublicGuard>
+        <AuthLayout />
+      </PublicGuard>
+    ),
     children: [
       {
         index: true,
@@ -46,6 +57,10 @@ export const router = createBrowserRouter([
       {
         path: "login",
         element: <LoginPage />,
+      },
+      {
+        path: "otp",
+        element: <OtpPage />,
       },
     ],
   },
