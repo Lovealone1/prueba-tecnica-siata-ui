@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Sidebar } from "@/features/layout/sidebar/Sidebar";
 import { PageHeader } from "@/features/layout/PageHeader";
 import { useSidebarCollapsed } from "@/features/layout/sidebar/sidebar.store";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { cn } from "@/lib/utils";
 
 export function DashboardLayout() {
@@ -18,7 +19,9 @@ export function DashboardLayout() {
       >
         <div className="w-full">
           <PageHeader />
-          <Outlet />
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
         </div>
       </main>
     </div>
