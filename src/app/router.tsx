@@ -18,10 +18,30 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AdminPage } from "@/features/admin/pages/AdminPage";
 import { UserListPage } from "@/features/user/pages/UserListPage";
 import { AdminShipmentListPage } from "@/features/admin/pages/AdminShipmentListPage";
+import { LandingPage } from "@/features/layout/pages/LandingPage";
+import { FrontendArchitecturePage } from "@/features/layout/pages/FrontendArchitecturePage";
+import { BackendArchitecturePage } from "@/features/layout/pages/BackendArchitecturePage";
+import { DatabaseArchitecturePage } from "@/features/layout/pages/DatabaseArchitecturePage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
+    element: <LandingPage />,
+  },
+  {
+    path: "/frontend-architecture",
+    element: <FrontendArchitecturePage />,
+  },
+  {
+    path: "/backend-architecture",
+    element: <BackendArchitecturePage />,
+  },
+  {
+    path: "/database-architecture",
+    element: <DatabaseArchitecturePage />,
+  },
+  {
+    path: "/dashboard",
     element: (
       <ErrorBoundary>
         <AuthGuard>
