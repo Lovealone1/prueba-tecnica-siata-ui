@@ -13,7 +13,7 @@ export function DashboardLayout() {
       <Sidebar />
       <main
         className={cn(
-          "flex-grow transition-all duration-300 p-6 md:p-8",
+          "flex-grow transition-all duration-300 p-4 md:p-6",
           isCollapsed ? "ml-[72px]" : "ml-[240px]"
         )}
       >
