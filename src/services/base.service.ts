@@ -18,7 +18,6 @@ export abstract class BaseService {
    * Constructs the full path for a request: /{version}/{module}/{path}
    */
   protected getPath(path: string = ""): string {
-    if (path === "") return `/${this.version}/${this.module}`;
     const cleanPath = path.startsWith("/") ? path : `/${path}`;
     return `/${this.version}/${this.module}${cleanPath}`;
   }
