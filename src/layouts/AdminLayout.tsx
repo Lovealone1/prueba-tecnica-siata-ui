@@ -31,7 +31,7 @@ export function AdminLayout() {
 
         <div className="flex items-center">
           <button 
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/dashboard")}
             className="flex items-center gap-2 px-4 py-2 rounded-xl hover:bg-primary-foreground/10 transition-colors font-bold text-sm tracking-wide border border-primary-foreground/20"
             title="Regresar al Dashboard"
           >

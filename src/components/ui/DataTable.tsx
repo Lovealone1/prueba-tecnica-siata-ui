@@ -28,6 +28,7 @@ interface DataTableProps<T> {
   currentPage?: number;
   isLoading?: boolean;
   filters?: React.ReactNode;
+  hideSearch?: boolean;
 }
 
 export function DataTable<T extends { id: string | number }>({
@@ -47,6 +48,7 @@ export function DataTable<T extends { id: string | number }>({
   currentPage: propCurrentPage,
   isLoading = false,
   filters,
+  hideSearch = false,
 }: DataTableProps<T>) {
   const [searchTerm, setSearchTerm] = useState("");
   const [internalPage, setInternalPage] = useState(1);
