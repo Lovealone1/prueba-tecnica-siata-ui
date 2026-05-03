@@ -3,19 +3,18 @@ import { useAuthStore } from "./auth.store";
 
 describe("Auth Store (Zustand)", () => {
   beforeEach(() => {
-    // Limpiamos el store y el localStorage antes de cada prueba
     useAuthStore.setState({ accessToken: null, user: null, isAuthenticated: false });
     localStorage.clear();
   });
 
-  it("debería inicializarse con estado vacío", () => {
+  it("should initialize with empty state", () => {
     const state = useAuthStore.getState();
     expect(state.accessToken).toBeNull();
     expect(state.user).toBeNull();
     expect(state.isAuthenticated).toBe(false);
   });
 
-  it("debería actualizar el estado al llamar a setAuth", () => {
+  it("should update state when setAuth is called", () => {
     const mockUser = {
       id: "1",
       first_name: "Admin",
@@ -35,8 +34,7 @@ describe("Auth Store (Zustand)", () => {
     expect(state.isAuthenticated).toBe(true);
   });
 
-  it("debería limpiar el estado y el storage al llamar a logout", () => {
-    // Forzamos un estado "logueado"
+  it("should clear state and storage when logout is called", () => {
     useAuthStore.setState({
       accessToken: "token",
       user: { id: "1" } as any,
@@ -44,10 +42,8 @@ describe("Auth Store (Zustand)", () => {
     });
     localStorage.setItem("siata-auth-storage", "dummy-data");
 
-    // Ejecutamos logout
     useAuthStore.getState().logout();
 
-    // Verificamos
     const state = useAuthStore.getState();
     expect(state.accessToken).toBeNull();
     expect(state.user).toBeNull();
