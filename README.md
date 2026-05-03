@@ -19,9 +19,6 @@ Frontend SPA para la gestion logistica de envios terrestres y maritimos. Este re
 - `src/components/ui/` contiene componentes genericos de UI.
 - `src/features/` organiza la funcionalidad por dominio.
 
-## Documentacion principal
-
-- [Arquitectura frontend](docs/frontend-architecture.md)
 
 ## Requisitos de entorno
 
