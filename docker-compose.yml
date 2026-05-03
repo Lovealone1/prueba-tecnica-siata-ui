@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  siata-frontend:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: siata-frontend
+    ports:
+      - "3000:80"
+    restart: always
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000/api
+      - NODE_ENV=production
