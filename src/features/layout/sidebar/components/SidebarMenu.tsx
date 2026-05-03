@@ -20,6 +20,7 @@ export function SidebarMenu() {
         <NavLink
           key={item.path}
           to={item.path}
+          end={item.path === "/dashboard"}
           className={({ isActive }) => cn(
             "flex items-center h-11 px-3 rounded-xl transition-all group relative",
             isActive 
