@@ -148,7 +148,7 @@ export function OtpPage() {
           <div className="w-full max-w-[480px] flex flex-col items-center">
 
             {/* Card */}
-            <div className="bg-white border border-outline-variant/30 rounded-2xl p-8 md:p-12 shadow-[0px_10px_40px_rgba(0,0,0,0.08)] w-full">
+            <div className="bg-surface-container-low border border-outline-variant/30 rounded-3xl p-8 md:p-12 shadow-[0px_20px_50px_rgba(0,0,0,0.1)] w-full dark:shadow-black/40">
               <div className="text-center mb-10">
                 <h1 className="text-3xl font-manrope font-extrabold text-on-surface mb-3 tracking-tight">
                   Verifica tu correo
@@ -174,8 +174,8 @@ export function OtpPage() {
                     className={cn(
                       "w-12 h-16 md:w-14 md:h-20 text-center text-3xl font-black rounded-xl border-2 transition-all outline-none",
                       digit
-                        ? "border-primary bg-primary/5 text-primary"
-                        : "border-outline-variant/40 bg-surface text-on-surface focus:border-primary focus:ring-4 focus:ring-primary/5"
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-outline-variant/40 bg-surface-container-lowest text-on-surface focus:border-primary focus:ring-4 focus:ring-primary/5"
                     )}
                   />
                 ))}
@@ -184,9 +184,9 @@ export function OtpPage() {
               {/* Timer & Resend Action */}
               <div className="text-center space-y-6">
                 {timeLeft > 0 ? (
-                  <div className="inline-flex items-center gap-3 px-6 py-3 bg-slate-100 rounded-full border border-slate-200 shadow-sm">
+                  <div className="inline-flex items-center gap-3 px-6 py-3 bg-surface-container-high rounded-full border border-outline-variant/10 shadow-sm">
                     <span className="material-symbols-outlined text-primary animate-pulse text-xl">timer</span>
-                    <span className="text-sm font-bold text-slate-700 tabular-nums">
+                    <span className="text-sm font-bold text-on-surface tabular-nums">
                       Reenviar en <span className="text-primary">{formatTime(timeLeft)}</span>
                     </span>
                   </div>
@@ -198,7 +198,7 @@ export function OtpPage() {
                     <button
                       onClick={() => resendMutation.mutate()}
                       disabled={resendMutation.isPending}
-                      className="w-full py-4 bg-white border-2 border-primary text-primary font-black uppercase tracking-widest text-xs rounded-xl hover:bg-primary hover:text-white active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/10"
+                      className="w-full py-4 bg-surface-container-lowest border-2 border-primary text-primary font-black uppercase tracking-widest text-xs rounded-xl hover:bg-primary hover:text-white active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/10"
                     >
                       {resendMutation.isPending ? (
                         <span className="animate-spin material-symbols-outlined">progress_activity</span>

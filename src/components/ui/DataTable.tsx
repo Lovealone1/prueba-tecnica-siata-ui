@@ -28,6 +28,7 @@ interface DataTableProps<T> {
   currentPage?: number;
   isLoading?: boolean;
   filters?: React.ReactNode;
+  hideSearch?: boolean;
 }
 
 export function DataTable<T extends { id: string | number }>({
@@ -47,6 +48,7 @@ export function DataTable<T extends { id: string | number }>({
   currentPage: propCurrentPage,
   isLoading = false,
   filters,
+  hideSearch = false,
 }: DataTableProps<T>) {
   const [searchTerm, setSearchTerm] = useState("");
   const [internalPage, setInternalPage] = useState(1);
@@ -101,23 +103,25 @@ export function DataTable<T extends { id: string | number }>({
       {/* Table Header / Search & Add */}
       <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
         <div className="flex flex-col md:flex-row items-center gap-4 w-full lg:w-auto">
-          <div className="relative w-full md:w-80 group">
-            <Icon
-              name="search"
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors"
-            />
-            <input
-              type="text"
-              placeholder={searchPlaceholder}
-              value={searchTerm}
-              onChange={(e) => {
-                const value = e.target.value;
-                setSearchTerm(value);
-                goToPage(1);
-              }}
-              className="w-full pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-2xl text-sm focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all shadow-sm"
-            />
-          </div>
+          {searchKey && !hideSearch && (
+            <div className="relative w-full md:w-80 group">
+              <Icon
+                name="search"
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors"
+              />
+              <input
+                type="text"
+                placeholder={searchPlaceholder}
+                value={searchTerm}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSearchTerm(value);
+                  goToPage(1);
+                }}
+                className="w-full pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-2xl text-sm focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all shadow-sm"
+              />
+            </div>
+          )}
 
           {filters && (
             <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">

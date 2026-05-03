@@ -4,11 +4,11 @@ import { Icon } from "@/utils/icon";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
-  { path: "/", label: "Dashboard", icon: "dashboard" },
-  { path: "/customers", label: "Clientes", icon: "group" },
-  { path: "/products", label: "Productos", icon: "inventory_2" },
-  { path: "/logistics", label: "Logística", icon: "warehouse" },
-  { path: "/shipments", label: "Envíos", icon: "local_shipping" },
+  { path: "/dashboard", label: "Dashboard", icon: "dashboard" },
+  { path: "/dashboard/customers", label: "Clientes", icon: "group" },
+  { path: "/dashboard/products", label: "Productos", icon: "inventory_2" },
+  { path: "/dashboard/logistics", label: "Logística", icon: "warehouse" },
+  { path: "/dashboard/shipments", label: "Envíos", icon: "local_shipping" },
 ];
 
 export function SidebarMenu() {

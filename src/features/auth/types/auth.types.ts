@@ -66,7 +66,7 @@ export type VerifyOtpPayload = z.infer<typeof VerifyOtpSchema>;
  * Response Schemas
  */
 export const UserSchema = z.object({
-  id: z.uuid(),
+  id: z.string().uuid(),
   email: z.email(),
   first_name: z.string(),
   last_name: z.string(),

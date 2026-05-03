@@ -34,15 +34,15 @@ export class ShipmentService extends BaseService {
 
   // Admin Endpoints (Privados)
   async overrideStatus(id: string, status: string): Promise<Shipment> {
-    return this.patch(`/${id}/status`, { status });
+    return this.patch(`/admin/${id}/status`, { shipping_status: status });
   }
 
   async getShipmentHistory(id: string): Promise<any[]> {
-    return this.get(`/${id}/history`);
+    return this.get(`/admin/${id}/history`);
   }
 
   async getStats(): Promise<any> {
-    return this.get("/stats");
+    return this.get("/admin/stats");
   }
 }
 

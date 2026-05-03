@@ -1,73 +1,59 @@
-# React + TypeScript + Vite
+# SIATA Logistics UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend SPA para la gestion logistica de envios terrestres y maritimos. Este repositorio contiene la capa de interfaz, el enrutamiento, el estado de cliente, la capa de servicios y los componentes reutilizables que consumen la API REST del backend.
 
-Currently, two official plugins are available:
+## Alcance
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Aplicacion construida con React + TypeScript + Vite.
+- Autenticacion por OTP con persistencia de sesion.
+- Control de acceso por roles para usuario y administrador.
+- CRUD de clientes, productos, bodegas, puertos, envios y usuarios.
+- Capa visual basada en Tailwind CSS, CSS variables y componentes reutilizables.
 
-## React Compiler
+## Descripción general de la arquitectura
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `src/main.tsx` inicializa la app y envuelve todos los proveedores globales.
+- `src/app/router.tsx` define las rutas publicas, privadas y administrativas.
+- `src/store/` concentra el estado de cliente con Zustand.
+- `src/services/` y `src/features/*/services/` encapsulan el acceso a API.
+- `src/components/ui/` contiene componentes genericos de UI.
+- `src/features/` organiza la funcionalidad por dominio.
 
-## Expanding the ESLint configuration
+## Documentacion principal
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [Arquitectura frontend](docs/frontend-architecture.md)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Requisitos de entorno
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Node.js 20+ recomendado.
+- pnpm para instalar y ejecutar dependencias.
+- Variable de entorno:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+VITE_API_BASE_URL=http://localhost:8000/api
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm dev
+pnpm build
+pnpm lint
+pnpm preview
 ```
+
+## Rutas principales
+
+- `/` landing page y entrada a la documentacion funcional.
+- `/auth/login` inicio de sesion o registro por OTP.
+- `/auth/otp` verificacion de codigo.
+- `/dashboard` panel principal para usuario autenticado.
+- `/admin` panel administrativo.
+
+## Notas de implementacion
+
+- El frontend usa React Query para estado asincrono y cache.
+- El token se agrega automaticamente mediante un interceptor de Axios.
+- Los modales globales se resuelven desde una unica store.
+- El tema claro/oscuro se persiste en localStorage.
+

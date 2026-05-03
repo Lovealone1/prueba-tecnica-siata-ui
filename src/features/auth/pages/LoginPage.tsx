@@ -51,7 +51,7 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex font-inter">
+    <div className="min-h-screen flex font-inter bg-surface">
       {/* Left Panel: Logistics Branding */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-primary overflow-hidden">
         <img
@@ -59,7 +59,7 @@ export function LoginPage() {
           alt="Logistics Background"
           className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay"
         />
-        <div className="relative z-10 flex flex-col justify-center px-16 text-white">
+        <div className="relative z-10 flex flex-col justify-center px-16 text-on-primary">
           <div className="flex items-center gap-4 mb-8">
             <span className="text-4xl font-extrabold tracking-tighter font-manrope">SIATA Logistics</span>
           </div>
@@ -81,14 +81,14 @@ export function LoginPage() {
           <div className="w-full max-w-[440px] flex flex-col items-center">
 
             {/* Intent Switcher */}
-            <div className="bg-slate-200 p-1 rounded-lg flex gap-1 mb-8 w-64 shadow-inner">
+            <div className="bg-surface-container-high p-1 rounded-2xl flex gap-1 mb-8 w-64 shadow-inner border border-outline-variant/10">
               <button
                 onClick={() => handleIntentChange("LOGIN")}
                 className={cn(
-                  "flex-1 py-2 text-sm font-bold rounded-lg transition-all",
+                  "flex-1 py-2 text-sm font-bold rounded-xl transition-all",
                   currentIntent === "LOGIN"
-                    ? "bg-white text-primary shadow-md scale-[1.02]"
-                    : "text-slate-500 hover:text-slate-900"
+                    ? "bg-surface-container-lowest text-primary shadow-lg scale-[1.02] border border-primary/10"
+                    : "text-outline hover:text-on-surface"
                 )}
               >
                 Iniciar Sesión
@@ -98,16 +98,16 @@ export function LoginPage() {
                 className={cn(
                   "flex-1 py-2 text-sm font-bold rounded-xl transition-all",
                   currentIntent === "REGISTER"
-                    ? "bg-white text-primary shadow-md scale-[1.02]"
-                    : "text-slate-500 hover:text-slate-900"
+                    ? "bg-surface-container-lowest text-primary shadow-lg scale-[1.02] border border-primary/10"
+                    : "text-outline hover:text-on-surface"
                 )}
               >
                 Registrarse
               </button>
             </div>
-
+ 
             {/* Floating Card */}
-            <div className="bg-white border border-outline-variant/30 rounded-2xl p-7 md:p-8 shadow-[0px_10px_40px_rgba(0,0,0,0.08)] w-full relative z-10">
+            <div className="bg-surface-container-low border border-outline-variant/20 rounded-3xl p-7 md:p-8 shadow-[0px_20px_50px_rgba(0,0,0,0.1)] w-full relative z-10 dark:shadow-black/40">
               <div className="text-center mb-6">
                 {currentIntent === "LOGIN" && (
                   <div className="flex justify-center mb-4">
@@ -135,7 +135,7 @@ export function LoginPage() {
                         <input
                           {...register("first_name")}
                           placeholder="Tu nombre"
-                          className="w-full pl-12 pr-4 py-3.5 bg-surface-container-lowest border border-outline-variant/60 rounded-xl text-sm text-black focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all placeholder:text-outline/70"
+                          className="w-full pl-12 pr-4 py-3.5 bg-surface-container-lowest border border-outline-variant/60 rounded-xl text-sm text-on-surface focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all placeholder:text-outline/70"
                         />
                       </div>
                       {errors.first_name && <p className="text-error text-[10px] font-bold px-1">{errors.first_name.message}</p>}
@@ -148,7 +148,7 @@ export function LoginPage() {
                         <input
                           {...register("last_name")}
                           placeholder="Tu apellido"
-                          className="w-full pl-12 pr-4 py-3.5 bg-surface-container-lowest border border-outline-variant/60 rounded-xl text-sm text-black focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all placeholder:text-outline/70"
+                          className="w-full pl-12 pr-4 py-3.5 bg-surface-container-lowest border border-outline-variant/60 rounded-xl text-sm text-on-surface focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all placeholder:text-outline/70"
                         />
                       </div>
                       {errors.last_name && <p className="text-error text-[10px] font-bold px-1">{errors.last_name.message}</p>}
@@ -161,7 +161,7 @@ export function LoginPage() {
                         <input
                           {...register("phone_number")}
                           placeholder="+57 300..."
-                          className="w-full pl-12 pr-4 py-3.5 bg-surface-container-lowest border border-outline-variant/60 rounded-xl text-sm text-black focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all placeholder:text-outline/70"
+                          className="w-full pl-12 pr-4 py-3.5 bg-surface-container-lowest border border-outline-variant/60 rounded-xl text-sm text-on-surface focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all placeholder:text-outline/70"
                         />
                       </div>
                       {errors.phone_number && <p className="text-error text-[10px] font-bold px-1">{errors.phone_number.message}</p>}
@@ -181,7 +181,7 @@ export function LoginPage() {
                       type="email"
                       placeholder="ejemplo@siata.com"
                       className={cn(
-                        "w-full pl-12 pr-4 py-3.5 bg-surface-container-lowest border rounded-xl text-black placeholder:text-outline/70 focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all text-sm",
+                        "w-full pl-12 pr-4 py-3.5 bg-surface-container-lowest border rounded-xl text-on-surface placeholder:text-outline/70 focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all text-sm",
                         errors.email ? "border-error" : "border-outline-variant/60"
                       )}
                     />
