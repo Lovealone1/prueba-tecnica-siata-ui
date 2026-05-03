@@ -20,7 +20,7 @@ class LogisticsService {
     country?: string
   ): Promise<LogisticsNodeListResponse> {
     const response = await apiClient.get<LogisticsNodeListResponse>(
-      `/v1${this.getEndpoint(type)}`,
+      `/v1${this.getEndpoint(type)}/`,
       { 
         params: {
           skip,
@@ -35,7 +35,7 @@ class LogisticsService {
 
   async createNode(type: LogisticsNodeType, data: LogisticsNodeCreateDTO): Promise<LogisticsNode> {
     const response = await apiClient.post<LogisticsNode>(
-      `/v1${this.getEndpoint(type)}`,
+      `/v1${this.getEndpoint(type)}/`,
       data
     );
     return response.data;
