@@ -1,12 +1,7 @@
 import axios, { type AxiosInstance } from "axios";
 import { useAuthStore } from "@/store/auth.store";
 
-let BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
-
-// Auto-fix for Mixed Content in production
-if (typeof window !== "undefined" && window.location.protocol === "https:" && BASE_URL.startsWith("http://") && !BASE_URL.includes("localhost")) {
-  BASE_URL = BASE_URL.replace("http://", "https://");
-}
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
 /**
  * Main Axios instance with global configuration and interceptors.
@@ -21,6 +16,11 @@ export const apiClient: AxiosInstance = axios.create({
 // Request interceptor: Attach JWT token if available
 apiClient.interceptors.request.use(
   (config) => {
+    // Protocol upgrade for production Railway URL
+    if (typeof window !== "undefined" && window.location.protocol === "https:" && config.baseURL?.startsWith("http://") && !config.baseURL.includes("localhost")) {
+      config.baseURL = config.baseURL.replace("http://", "https://");
+    }
+
     let token = useAuthStore.getState().accessToken;
     
     // Fallback: Si el token no está en el store (posible problema de hidratación),
