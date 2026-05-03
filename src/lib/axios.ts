@@ -1,7 +1,12 @@
 import axios, { type AxiosInstance } from "axios";
 import { useAuthStore } from "@/store/auth.store";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
+let BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
+
+// Auto-fix for Mixed Content in production
+if (typeof window !== "undefined" && window.location.protocol === "https:" && BASE_URL.startsWith("http://") && !BASE_URL.includes("localhost")) {
+  BASE_URL = BASE_URL.replace("http://", "https://");
+}
 
 /**
  * Main Axios instance with global configuration and interceptors.
