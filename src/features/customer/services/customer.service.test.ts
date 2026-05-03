@@ -22,7 +22,7 @@ describe("Customer Service", () => {
 
     const result = await customerService.getCustomers(10, 50);
 
-    expect(apiClient.get).toHaveBeenCalledWith("/v1/customers/", { params: { skip: 10, limit: 50 } });
+    expect(apiClient.get).toHaveBeenCalledWith("/v1/customers", { params: { skip: 10, limit: 50 } });
     expect(result).toEqual(mockResponse);
   });
 
@@ -44,7 +44,7 @@ describe("Customer Service", () => {
 
     const result = await customerService.createCustomer(payload as any);
 
-    expect(apiClient.post).toHaveBeenCalledWith("/v1/customers/", payload, undefined);
+    expect(apiClient.post).toHaveBeenCalledWith("/v1/customers", payload, undefined);
     expect(result).toEqual(mockCreated);
   });
 
