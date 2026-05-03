@@ -20,24 +20,46 @@ Frontend SPA para la gestion logistica de envios terrestres y maritimos. Este re
 - `src/features/` organiza la funcionalidad por dominio.
 
 
-## Requisitos de entorno
+## Guía de Inicio Rápido
 
-- Node.js 20+ recomendado.
-- pnpm para instalar y ejecutar dependencias.
-- Variable de entorno:
+Existen dos formas de ejecutar esta interfaz:
 
-```bash
-VITE_API_BASE_URL=http://localhost:8000/api
-```
+### Opción A: Ejecución con Docker (Recomendada para revisión)
+Si tienes Docker instalado, puedes levantar la aplicación en segundos sin preocuparte por las dependencias locales.
 
-## Scripts
+1. Asegúrate de que el backend esté corriendo en `http://localhost:8000`.
+2. Ejecuta el siguiente comando en la raíz del frontend:
+   ```bash
+   docker-compose up --build
+   ```
+3. Accede a la aplicación en `http://localhost:3000`.
 
-```bash
-pnpm dev
-pnpm build
-pnpm lint
-pnpm preview
-```
+### Opción B: Ejecución Local (Desarrollo)
+Requiere **Node.js 20+** y **pnpm**.
+
+1. Instalar dependencias:
+   ```bash
+   pnpm install
+   ```
+2. Configurar variables de entorno (opcional, usa valores por defecto):
+   Crea un archivo `.env` basado en el siguiente valor:
+   ```bash
+   VITE_API_BASE_URL=http://localhost:8000/api
+   NODE_ENV=development
+   ```
+3. Iniciar servidor de desarrollo:
+   ```bash
+   pnpm dev
+   ```
+4. Abrir `http://localhost:5173` en el navegador.
+
+## Scripts Disponibles
+
+- `pnpm dev`: Inicia el servidor de desarrollo con HMR.
+- `pnpm build`: Genera el bundle de producción en la carpeta `dist/`.
+- `pnpm test`: Ejecuta la suite completa de pruebas unitarias (Vitest).
+- `pnpm lint`: Ejecuta el linter (ESLint).
+- `pnpm preview`: Previsualiza localmente la build de producción.
 
 ## Rutas principales
 

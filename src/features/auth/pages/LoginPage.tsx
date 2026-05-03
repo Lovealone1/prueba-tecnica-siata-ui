@@ -60,7 +60,7 @@ export function LoginPage() {
           alt="Logistics Background"
           className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay"
         />
-        <div className="relative z-10 flex flex-col justify-center px-16 text-on-primary">
+        <div className="relative z-10 flex flex-col justify-center px-16 text-white">
           <div className="flex items-center gap-4 mb-8">
             <span className="text-4xl font-extrabold tracking-tighter font-manrope">SIATA Logistics</span>
           </div>
@@ -68,7 +68,7 @@ export function LoginPage() {
             Gestión logística <br />
             inteligente y segura.
           </h2>
-          <p className="text-xl text-blue-100 max-w-lg leading-relaxed opacity-90">
+          <p className="text-xl text-white/80 max-w-lg leading-relaxed">
             Control total sobre tus envíos, almacenes y operaciones portuarias en una sola plataforma.
           </p>
         </div>
