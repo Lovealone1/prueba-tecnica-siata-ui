@@ -12,6 +12,7 @@ import { ConfirmDeleteLogisticsModal } from "@/features/modals/ConfirmDeleteLogi
 import { ShipmentForm } from "@/features/modals/ShipmentForm";
 import { ShipmentDetails } from "@/features/modals/ShipmentDetails";
 import { ConfirmDeleteShipmentModal } from "@/features/modals/ConfirmDeleteShipmentModal";
+import { EditRoleModal } from "@/features/user/components/EditRoleModal";
 
 export function ModalProvider() {
   const { isOpen, type, data, onClose } = useModalStore();
@@ -122,6 +123,13 @@ export function ModalProvider() {
           title: "Eliminar Envío",
           subtitle: "Esta acción no se puede deshacer.",
           component: <ConfirmDeleteShipmentModal data={data} />,
+          maxWidth: "sm",
+        };
+      case "EDIT_ROLE":
+        return {
+          title: "Modificar Rol",
+          subtitle: "Asigna los permisos del usuario en el sistema.",
+          component: <EditRoleModal initialData={data} />,
           maxWidth: "sm",
         };
       default:

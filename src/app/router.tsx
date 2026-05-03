@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { DashboardLayout } from "@/layouts/DashboardLayout";
+import { AdminLayout } from "@/layouts/AdminLayout";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { LoginPage } from "@/features/auth/pages/LoginPage";
 import { OtpPage } from "@/features/auth/pages/OtpPage";
@@ -14,6 +15,8 @@ import { RoleGuard } from "@/features/auth/components/RoleGuard";
 import { GlobalRole } from "@/features/auth/types/auth.types";
 import { NotFoundPage } from "@/features/layout/pages/NotFoundPage";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { AdminPage } from "@/features/admin/pages/AdminPage";
+import { UserListPage } from "@/features/user/pages/UserListPage";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +52,36 @@ export const router = createBrowserRouter([
       {
         path: "shipments",
         element: <ShipmentListPage />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: (
+      <ErrorBoundary>
+        <AuthGuard>
+          <RoleGuard allowedRoles={[GlobalRole.ADMIN]}>
+            <AdminLayout />
+          </RoleGuard>
+        </AuthGuard>
+      </ErrorBoundary>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Navigate to="users" replace />,
+      },
+      {
+        path: "users",
+        element: <UserListPage />,
+      },
+      {
+        path: "shipments",
+        element: (
+          <div className="flex items-center justify-center h-full">
+            <h2 className="text-2xl font-bold text-on-surface-variant">Módulo de Envíos (En desarrollo)</h2>
+          </div>
+        ),
       },
     ],
   },

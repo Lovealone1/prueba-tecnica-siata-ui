@@ -34,13 +34,15 @@ export function SidebarUserSection() {
           <Icon name={theme === "light" ? "dark_mode" : "light_mode"} size="xl" />
         </button>
         
-        <button
-          className="flex items-center justify-center w-10 h-10 rounded-xl hover:bg-primary/10 text-outline hover:text-primary opacity-50 cursor-not-allowed transition-all"
-          title="Configuración"
-          disabled
-        >
-          <Icon name="settings" size="xl" />
-        </button>
+        {user?.global_role === "ADMIN" && (
+          <button
+            onClick={() => navigate("/admin")}
+            className="flex items-center justify-center w-10 h-10 rounded-xl hover:bg-primary/10 text-outline hover:text-primary transition-all"
+            title="Panel de Administración"
+          >
+            <Icon name="settings" size="xl" />
+          </button>
+        )}
       </div>
 
       {/* User Card */}
