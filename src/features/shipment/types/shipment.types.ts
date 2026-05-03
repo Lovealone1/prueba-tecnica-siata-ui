@@ -91,3 +91,11 @@ export interface ShipmentFilters {
   date_from?: string;
   date_to?: string;
 }
+export interface ShipmentHistoryEntry {
+  id: string;
+  shipment_id: string;
+  old_status: ShippingStatus;
+  new_status: ShippingStatus;
+  reason: string;
+  created_at: string;
+}

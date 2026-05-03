@@ -51,9 +51,8 @@ export function Modal({
 
       {/* Modal Content */}
       <div className={cn(
-        "relative w-full bg-background border border-outline-variant/30 rounded-[32px] shadow-2xl overflow-hidden animate-in zoom-in-95 fade-in duration-300 flex flex-col max-h-[95vh]",
-        MAX_WIDTHS[maxWidth],
-        (maxWidth === "lg" || maxWidth === "xl" || maxWidth === "2xl") && "min-h-[600px]"
+        "relative w-full bg-background border border-outline-variant/30 rounded-[32px] shadow-2xl overflow-hidden animate-in zoom-in-95 fade-in duration-300 flex flex-col h-auto max-h-[90vh]",
+        MAX_WIDTHS[maxWidth]
       )}>
         {/* Header */}
         <div className="px-8 pt-8 pb-4 flex justify-between items-start">
@@ -76,8 +75,8 @@ export function Modal({
           </button>
         </div>
 
-        {/* Body (Scrollable) */}
-        <div className="flex-grow overflow-y-auto px-8 pb-8 custom-scrollbar">
+        {/* Body */}
+        <div className="flex-grow px-8 pb-4 custom-scrollbar">
           {children}
         </div>
       </div>

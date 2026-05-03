@@ -13,6 +13,8 @@ import { ShipmentForm } from "@/features/modals/ShipmentForm";
 import { ShipmentDetails } from "@/features/modals/ShipmentDetails";
 import { ConfirmDeleteShipmentModal } from "@/features/modals/ConfirmDeleteShipmentModal";
 import { EditRoleModal } from "@/features/user/components/EditRoleModal";
+import { ShipmentHistoryModal } from "@/features/admin/components/ShipmentHistoryModal";
+import { OverrideStatusModal } from "@/features/admin/components/OverrideStatusModal";
 
 export function ModalProvider() {
   const { isOpen, type, data, onClose } = useModalStore();
@@ -130,6 +132,20 @@ export function ModalProvider() {
           title: "Modificar Rol",
           subtitle: "Asigna los permisos del usuario en el sistema.",
           component: <EditRoleModal initialData={data} />,
+          maxWidth: "sm",
+        };
+      case "ADMIN_SHIPMENT_HISTORY":
+        return {
+          title: "Historial de Cambios",
+          subtitle: `Trazabilidad completa para la guía #${data.guide_number}`,
+          component: <ShipmentHistoryModal shipmentId={data.id} />,
+          maxWidth: "md",
+        };
+      case "ADMIN_OVERRIDE_STATUS":
+        return {
+          title: "Gestionar Estado",
+          subtitle: `Control administrativo de flujo logístico`,
+          component: <OverrideStatusModal shipment={data} />,
           maxWidth: "sm",
         };
       default:

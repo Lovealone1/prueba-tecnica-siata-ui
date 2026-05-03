@@ -17,6 +17,7 @@ import { NotFoundPage } from "@/features/layout/pages/NotFoundPage";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AdminPage } from "@/features/admin/pages/AdminPage";
 import { UserListPage } from "@/features/user/pages/UserListPage";
+import { AdminShipmentListPage } from "@/features/admin/pages/AdminShipmentListPage";
 
 export const router = createBrowserRouter([
   {
@@ -77,11 +78,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "shipments",
-        element: (
-          <div className="flex items-center justify-center h-full">
-            <h2 className="text-2xl font-bold text-on-surface-variant">Módulo de Envíos (En desarrollo)</h2>
-          </div>
-        ),
+        element: <AdminShipmentListPage />,
       },
     ],
   },
