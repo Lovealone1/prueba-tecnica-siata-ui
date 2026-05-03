@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { RequestOtpSchema, type RequestOtpPayload, type AuthIntent } from "../types/auth.types";
 import { authService } from "../services/auth.service";
 import { cn } from "@/lib/utils";
+import { Icon } from "@/utils/icon";
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -75,9 +76,17 @@ export function LoginPage() {
       </div>
 
       {/* Right Panel: Auth Card */}
-      <div className="w-full lg:w-1/2 flex flex-col bg-surface overflow-y-auto">
+      <div className="w-full lg:w-1/2 flex flex-col bg-surface overflow-y-auto relative">
+        {/* Back to Home Button */}
+        <div className="absolute top-6 left-6 z-20">
+          <Link to="/" className="flex items-center gap-2 text-outline hover:text-primary transition-colors text-xs font-bold uppercase tracking-widest">
+            <Icon name="arrow_back" size="sm" />
+            Inicio
+          </Link>
+        </div>
+
         {/* Main Content (Centered) */}
-        <div className="flex-grow flex flex-col items-center justify-center p-6 md:p-12">
+        <div className="flex-grow flex flex-col items-center justify-center p-6 md:p-12 mt-8 lg:mt-0">
           <div className="w-full max-w-[440px] flex flex-col items-center">
 
             {/* Intent Switcher */}
