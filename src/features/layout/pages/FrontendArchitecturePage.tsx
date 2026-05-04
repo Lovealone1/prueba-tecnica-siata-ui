@@ -410,54 +410,52 @@ export function FrontendArchitecturePage() {
 
         {/* ════ SECTION 9 — GOOD TO KNOW / PASOS SIGUIENTES ════ */}
         <section className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
-          <Card className="p-10 md:p-14 relative overflow-hidden bg-primary text-white shadow-2xl">
+          <Card className="p-10 md:p-14 relative overflow-hidden bg-surface-container-highest shadow-xl border-primary/20">
             {/* Elementos decorativos */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-2xl translate-y-1/3 -translate-x-1/4" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-2xl translate-y-1/3 -translate-x-1/4" />
             
             <div className="relative z-10 flex flex-col md:flex-row gap-10 items-center md:items-start justify-between">
               <div className="max-w-xl">
-                <SectionLabel><span className="text-white/80">Evolución</span></SectionLabel>
-                <h2 className="font-manrope font-black text-3xl md:text-5xl text-white mt-1 mb-6 leading-tight">
+                <SectionLabel><span className="text-primary">Evolución</span></SectionLabel>
+                <h2 className="font-manrope font-black text-3xl md:text-5xl text-on-surface mt-1 mb-6 leading-tight">
                   Good To Know <br/>
-                  <span className="text-white/70 text-2xl md:text-3xl">Pasos Siguientes</span>
+                  <span className="text-on-surface-variant text-2xl md:text-3xl">Pasos Siguientes</span>
                 </h2>
-                <p className="text-white/80 leading-relaxed text-sm md:text-base">
+                <p className="text-on-surface-variant leading-relaxed text-sm md:text-base">
                   Por temas de tiempo y practicidad enfocados en la prueba técnica, existen mejoras arquitectónicas y funcionales que no fueron implementadas en esta primera iteración. Sin embargo, estas representan el mapa de ruta (Roadmap) natural para escalar este sistema a un nivel Enterprise.
                 </p>
               </div>
 
-              <div className="w-full md:w-auto flex-grow max-w-md bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/20">
-                <ul className="space-y-4">
-                  <li className="flex items-start gap-3">
-                    <Icon name="science" size="sm" className="text-white shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-bold text-sm">Testing Automatizado</h4>
-                      <p className="text-xs text-white/70 mt-1">Implementación de Jest o Vitest para lógica de Zustand y React Testing Library para componentes críticos como DataTable y Formularios.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Icon name="splitscreen" size="sm" className="text-white shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-bold text-sm">Code Splitting por Ruta</h4>
-                      <p className="text-xs text-white/70 mt-1">Configurar <code>React.lazy()</code> para que el bundle del área Admin no se cargue en el chunk principal del Dashboard, mejorando el TTI.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Icon name="view_quilt" size="sm" className="text-white shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-bold text-sm">Catálogo Storybook</h4>
-                      <p className="text-xs text-white/70 mt-1">Aislar primitivas visuales en Storybook para iterar el diseño independiente de los datos de backend.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Icon name="monitor_heart" size="sm" className="text-white shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-bold text-sm">Monitoreo y Telemetría</h4>
-                      <p className="text-xs text-white/70 mt-1">Integración con Sentry/Datadog para atrapar errores asíncronos y monitorear la performance en el cliente en tiempo real.</p>
-                    </div>
-                  </li>
-                </ul>
+              <div className="w-full md:w-auto flex-grow max-w-md space-y-4">
+                <Card className="p-5 hover:border-primary/40 transition-colors flex items-start gap-3">
+                  <Icon name="science" size="sm" className="text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-bold text-sm text-on-surface">Testing Automatizado</h4>
+                    <p className="text-xs text-on-surface-variant mt-1">Implementación de Jest o Vitest para lógica de Zustand y React Testing Library para componentes críticos como DataTable y Formularios.</p>
+                  </div>
+                </Card>
+                <Card className="p-5 hover:border-primary/40 transition-colors flex items-start gap-3">
+                  <Icon name="splitscreen" size="sm" className="text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-bold text-sm text-on-surface">Code Splitting por Ruta</h4>
+                    <p className="text-xs text-on-surface-variant mt-1">Configurar <code>React.lazy()</code> para que el bundle del área Admin no se cargue en el chunk principal del Dashboard, mejorando el TTI.</p>
+                  </div>
+                </Card>
+                <Card className="p-5 hover:border-primary/40 transition-colors flex items-start gap-3">
+                  <Icon name="view_quilt" size="sm" className="text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-bold text-sm text-on-surface">Catálogo Storybook</h4>
+                    <p className="text-xs text-on-surface-variant mt-1">Aislar primitivas visuales en Storybook para iterar el diseño independiente de los datos de backend.</p>
+                  </div>
+                </Card>
+                <Card className="p-5 hover:border-primary/40 transition-colors flex items-start gap-3">
+                  <Icon name="monitor_heart" size="sm" className="text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-bold text-sm text-on-surface">Monitoreo y Telemetría</h4>
+                    <p className="text-xs text-on-surface-variant mt-1">Integración con Sentry/Datadog para atrapar errores asíncronos y monitorear la performance en el cliente en tiempo real.</p>
+                  </div>
+                </Card>
               </div>
             </div>
           </Card>
